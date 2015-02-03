@@ -40,5 +40,5 @@ apt-get install python
 
 # Usage
 ```sh
-$ python scwg.py config_template.xml
+python scwg.py config_template.xml
 ```
