@@ -34,11 +34,11 @@ Take a look at this example.
 * bash
 
 # Installation
-``sh
+```sh
 apt-get install python
-``
+```
 
 # Usage
-``sh
+```sh
 $ python scwg.py config_template.xml
 ```
