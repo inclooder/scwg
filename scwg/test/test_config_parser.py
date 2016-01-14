@@ -27,12 +27,13 @@ class TestConfigParser(unittest.TestCase):
         self.assertEquals('root', connection.user)
         self.assertEquals('192.168.1.50', connection.ip)
         self.assertEquals(True, connection.create_tunnel)
+        self.assertEquals(22, connection.port)
 
 
     def testParseTerminalNode(self):
         xml_string = """
         <term name="s_server2">
-            <ssh user="root" ip="192.168.3.81" ran_tun="yes" /> 
+            <ssh user="root" ip="192.168.3.81" ran_tun="yes" port="333" /> 
             <ssh user="root" ip="192.168.6.84" ran_tun="yes" /> 
         </term>
         """
@@ -44,6 +45,7 @@ class TestConfigParser(unittest.TestCase):
         first_connection = terminal.connections[0]
         self.assertEquals('192.168.3.81', first_connection.ip)
         self.assertEquals(True, first_connection.create_tunnel)
+        self.assertEquals(333, first_connection.port)
 
 
         

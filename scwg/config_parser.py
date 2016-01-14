@@ -1,10 +1,11 @@
 
 class SshConnection:
 
-    def __init__(self, user, ip, create_tunnel):
+    def __init__(self, user, ip, create_tunnel, port = 22):
         self.user = user 
         self.ip = ip 
         self.create_tunnel = create_tunnel
+        self.port = port
         
 class Terminal:
 
@@ -39,8 +40,11 @@ class ConfigParser:
         create_tunnel = doc_element.getAttribute('ran_tun')
         
         create_tunnel = (create_tunnel.lower() == 'yes')
-        
-        return SshConnection(user, ip, create_tunnel)
+        if(doc_element.hasAttribute('port')):
+            port = doc_element.getAttribute('port')
+            return SshConnection(user, ip, create_tunnel, int(port))
+        else:
+            return SshConnection(user, ip, create_tunnel)
 
     def parse_terminal_node(self, xml_string):
         doc = minidom.parseString(xml_string)
