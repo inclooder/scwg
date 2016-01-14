@@ -1,6 +1,6 @@
 import unittest
 import os
-from scwg.config_parser import ConfigParser, Terminal
+from scwg import ConfigParser, Terminal
 
 
 class TestConfigParser(unittest.TestCase):

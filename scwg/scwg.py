@@ -1,4 +1,5 @@
 from xml.dom import minidom
+import config_parser
 
 def appendTunnelPortGeneration(text):
     text += '\n'
@@ -31,41 +32,33 @@ def appendSshCall(userName = 'root', ipAddress = 'localhost', port = 22, tunnelP
 
 def create_func(term):
     temp='\n'
-    _name=term.getAttribute('name')
+    _name = term.name
     temp = appendBashFunctionBegin(_name, temp)
 
     elems=[]
-    for conn in term.childNodes:
-        if isinstance(conn, minidom.Element):
-            elems.append(conn)
+    for conn in term.connections:
+        elems.append(conn)
 
 
     if elems[0]:
-        if elems[0].getAttribute('ran_tun') == 'yes':
-          ran_tun = True
-        else:
-          ran_tun = False
-
+        ran_tun = elems[0].create_tunnel
         if ran_tun:
             temp = appendTunnelPortGeneration(temp)
 
-        _port = elems[0].getAttribute('port') or 22
-        _last_ip = elems[0].getAttribute('ip')
-        temp = appendSshCall(text = temp, userName = elems[0].getAttribute('user'), ipAddress = _last_ip, port = _port, tunnelPort = '$tun_port')
+        _port = elems[0].port
+        _last_ip = elems[0].ip
+        temp = appendSshCall(text = temp, userName = elems[0].user, ipAddress = _last_ip, port = _port, tunnelPort = '$tun_port')
 
 
     for elem in elems[1:]:
-      if elem.getAttribute('ran_tun') == 'yes':
-          ran_tun = True
-      else:
-          ran_tun = False
+      ran_tun = elem.create_tunnel
 
       temp+='if [ $? -eq 255 ]; then\n'
       temp+='echo "Nie mozna sie polaczyc z adresem {0}"\n'.format(_last_ip)
 
-      _last_ip=elem.getAttribute('ip')
-      _port = elem.getAttribute('port') or 22
-      temp = appendSshCall(text = temp, userName = elem.getAttribute('user'), ipAddress = elem.getAttribute('ip'), port = _port, tunnelPort = '$tun_port')
+      _last_ip=elem.ip
+      _port = elem.port
+      temp = appendSshCall(text = temp, userName = elem.user, ipAddress = elem.ip, port = _port, tunnelPort = '$tun_port')
 
       temp+='fi\n'
 
@@ -82,15 +75,18 @@ def main(argv):
         print "usage {0} <configfile>"
         sys.exit(2)
 
+    parser =  config_parser.ConfigParser()
     configfile = argv[1]
-    DOMTree = minidom.parse(configfile)
-    #print DOMTree.toxml()
+    parser.read_config_file(configfile)
 
-    cNodes = DOMTree.childNodes
     file_temp='''
 #!/bin/sh
 '''
-    for term in cNodes[0].getElementsByTagName("term"):
+    terminals = parser.get_terminals()
+
+
+
+    for term in terminals:
         file_temp += create_func(term)
 
     print file_temp

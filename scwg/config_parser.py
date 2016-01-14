@@ -29,7 +29,7 @@ class ConfigParser:
 
         child_nodes = dom_tree.childNodes
         for child_node in child_nodes[0] .getElementsByTagName('term'):
-            self.terminals.append(None)
+            self.terminals.append(self.parse_terminal_node(child_node.toxml()))
 
     def parse_ssh_connection(self, xml_string):
         doc = minidom.parseString(xml_string)
