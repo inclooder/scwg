@@ -1,0 +1,19 @@
+<config>
+  <term name="s_server1">
+    <ssh user="root" ip="192.168.1.100" ran_tun="no" /> 
+  </term>
+  
+  <term name="s_server2">
+    <ssh user="root" ip="192.168.1.50" ran_tun="yes" /> 
+    <ssh user="root" ip="192.168.1.65" ran_tun="yes" /> 
+  </term>
+  
+  <term name="s_server2">
+    <ssh user="root" ip="192.168.2.80" ran_tun="yes" /> 
+    <ssh user="root" ip="192.168.3.81" ran_tun="yes" /> 
+    <ssh user="root" ip="192.168.4.82" ran_tun="yes" /> 
+    <ssh user="root" ip="192.168.5.83" ran_tun="yes" /> 
+    <ssh user="root" ip="192.168.6.84" ran_tun="yes" /> 
+    <ssh user="root" ip="192.168.7.85" ran_tun="yes" /> 
+  </term>
+</config>
