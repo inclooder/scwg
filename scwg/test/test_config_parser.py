@@ -18,10 +18,9 @@ class TestConfigParser(unittest.TestCase):
         self.assertIsInstance(terminals, list)
         self.assertEquals(3, len(terminals))
 
-    
     def testParseSshConnection(self):
         xml_string = """
-        <ssh user="root" ip="192.168.1.50" ran_tun="yes" /> 
+        <ssh user="root" ip="192.168.1.50" ran_tun="yes" />
         """
         connection = self.config_parser.parse_ssh_connection(xml_string)
         self.assertEquals('root', connection.user)
@@ -33,8 +32,8 @@ class TestConfigParser(unittest.TestCase):
     def testParseTerminalNode(self):
         xml_string = """
         <term name="s_server2">
-            <ssh user="root" ip="192.168.3.81" ran_tun="yes" port="333" /> 
-            <ssh user="root" ip="192.168.6.84" ran_tun="yes" /> 
+            <ssh user="root" ip="192.168.3.81" ran_tun="yes" port="333" />
+            <ssh user="root" ip="192.168.6.84" ran_tun="yes" />
         </term>
         """
         terminal = self.config_parser.parse_terminal_node(xml_string)
@@ -46,14 +45,6 @@ class TestConfigParser(unittest.TestCase):
         self.assertEquals('192.168.3.81', first_connection.ip)
         self.assertEquals(True, first_connection.create_tunnel)
         self.assertEquals(333, first_connection.port)
-
-
-        
-
-
-
-
-
 
 if __name__ == '__main__':
     unittest.main()
