@@ -4,8 +4,7 @@ Scwg is a tiny tool that helps you connect to ssh server.
 Scwg creates bash function for each server you define.
 Servers can have multiple addresses.
 Firstly you'll need to create xml file with server definition. 
-Take a look at this example.
-
+Take a look at this example.  
 ```xml
 <config>
   <term name="s_server1">
@@ -36,6 +35,7 @@ Take a look at this example.
 # Installation
 ```sh
 apt-get install python
+python setup.py install
 ```
 
 # Usage
