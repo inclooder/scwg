@@ -42,3 +42,9 @@ python setup.py install
 ```sh
 python scwg.py config_template.xml
 ```
+
+# Test
+
+```sh
+python -m unittest discover
+```
